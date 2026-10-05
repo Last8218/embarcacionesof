@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="row g-3 mb-3" th:fragment="dashboardKpis(totalEmbarcaciones, embarcacionesOperativas)">
+    <div class="col-md-6 col-xl-3">
+        <div class="kpi-card">
+            <p class="kpi-label">Embarcaciones registradas</p>
+            <div class="kpi-value" th:text="${totalEmbarcaciones}">12</div>
+            <p class="kpi-foot"><span th:text="${embarcacionesOperativas}">10</span> operativas</p>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="kpi-card">
+            <p class="kpi-label">Mantenimientos activos</p>
+            <div class="kpi-value">4</div>
+            <p class="kpi-foot">2 prioritarios</p>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="kpi-card">
+            <p class="kpi-label">Alertas tecnicas</p>
+            <div class="kpi-value">3</div>
+            <p class="kpi-foot">Requieren revision</p>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="kpi-card">
+            <p class="kpi-label">Documentos vigentes</p>
+            <div class="kpi-value">86</div>
+            <p class="kpi-foot">94% actualizado</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

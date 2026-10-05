@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside class="sidebar" th:fragment="sidebar(activeMenu)">
+    <a th:href="@{/index}" class="text-decoration-none d-block">
+        <div class="brand-box">
+            <h4 class="brand-title">Gestion de Embarcaciones</h4>
+            <p class="brand-subtitle">Pesca Limitada</p>
+        </div>
+    </a>
+
+    <div class="menu-label">Modulos del sistema</div>
+
+    <a th:if="${permisosSesion.contains('EMBARCACION:VER')}" th:href="@{/embarcaciones}" class="menu-link" th:classappend="${activeMenu == 'embarcaciones'} ? ' active' : ''">
+        <span>Embarcaciones</span>
+    </a>
+    <a th:href="@{/seccion/maquinas-sistemas}" class="menu-link" th:classappend="${activeMenu == 'maquinas-sistemas'} ? ' active' : ''"><span>Maquinas y Sistemas</span><span class="menu-next">Prox.</span></a>
+    <a th:href="@{/seccion/componentes}" class="menu-link" th:classappend="${activeMenu == 'componentes'} ? ' active' : ''"><span>Componentes</span><span class="menu-next">Prox.</span></a>
+    <a th:href="@{/seccion/piezas-repuestos}" class="menu-link" th:classappend="${activeMenu == 'piezas-repuestos'} ? ' active' : ''"><span>Piezas y Repuestos</span><span class="menu-next">Prox.</span></a>
+    <a th:href="@{/seccion/documentacion}" class="menu-link" th:classappend="${activeMenu == 'documentacion'} ? ' active' : ''"><span>Documentacion</span><span class="menu-next">Prox.</span></a>
+    <a th:href="@{/seccion/mantenimiento-historial}" class="menu-link" th:classappend="${activeMenu == 'mantenimiento-historial'} ? ' active' : ''"><span>Mantenimiento e Historial</span><span class="menu-next">Prox.</span></a>
+    <a th:href="@{/seccion/informacion-tecnica}" class="menu-link" th:classappend="${activeMenu == 'informacion-tecnica'} ? ' active' : ''"><span>Informacion Tecnica</span><span class="menu-next">Prox.</span></a>
+    <a th:if="${permisosSesion.contains('USUARIO:VER')}" th:href="@{/usuarios}" class="menu-link" th:classappend="${activeMenu == 'usuarios'} ? ' active' : ''"><span>Usuarios</span></a>
+
+
+</aside>
+</body>
+</html>
+

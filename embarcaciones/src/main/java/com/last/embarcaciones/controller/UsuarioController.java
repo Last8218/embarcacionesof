@@ -1,7 +1,11 @@
 package com.last.embarcaciones.controller;
 
 
+import com.last.embarcaciones.dto.CambioPasswordRequest;
+import com.last.embarcaciones.dto.ConfirmacionRecuperacionPasswordRequest;
+import com.last.embarcaciones.dto.SolicitudRecuperacionPasswordRequest;
 import com.last.embarcaciones.dto.UsuarioDTO;
+import com.last.embarcaciones.entity.Rol;
 import com.last.embarcaciones.service.UsuarioService;
 import com.last.embarcaciones.utils.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +39,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/login")
-    public GenericResponse<UsuarioDTO> login(@RequestParam String usuario, @RequestParam String passwordHash) {
-        UsuarioDTO usuarioEncontrado = usuarioService.obtenerUsuarioPorUsuarioYContraseña(usuario, passwordHash);
+    public GenericResponse<UsuarioDTO> login(@RequestParam String usuario, @RequestParam String password) {
+        UsuarioDTO usuarioEncontrado = usuarioService.obtenerUsuarioPorUsuarioYContraseña(usuario, password);
         return new GenericResponse<>("success", 1, "Usuario encontrado exitosamente", usuarioEncontrado);
     }
 
@@ -44,6 +48,42 @@ public class UsuarioController {
     public GenericResponse<UsuarioDTO> actualizarUsuario(@PathVariable int id, @RequestBody UsuarioDTO usuarioDTO) {
         UsuarioDTO usuarioActualizado = usuarioService.actualizarUsuario(id, usuarioDTO);
         return new GenericResponse<>("success", 1, "Usuario actualizado exitosamente", usuarioActualizado);
+    }
+
+    @PostMapping("/password/cambiar")
+    public GenericResponse<Object> cambiarPassword(@RequestBody CambioPasswordRequest request) {
+        usuarioService.cambiarPassword(request.getUsuario(), request.getPasswordActual(), request.getPasswordNueva());
+        return new GenericResponse<>("success", 1, "Contrasena actualizada exitosamente", null);
+    }
+
+    @PostMapping("/password/recuperar/solicitud")
+    public GenericResponse<Object> solicitarRecuperacionPassword(@RequestBody SolicitudRecuperacionPasswordRequest request) {
+        usuarioService.solicitarRecuperacionPassword(request.getEmail());
+        return new GenericResponse<>("success", 1, "Si el correo existe, se envio un mensaje de recuperacion.", null);
+    }
+
+    @PostMapping("/password/recuperar/confirmar")
+    public GenericResponse<Object> confirmarRecuperacionPassword(@RequestBody ConfirmacionRecuperacionPasswordRequest request) {
+        usuarioService.confirmarRecuperacionPassword(request.getToken(), request.getPasswordNueva());
+        return new GenericResponse<>("success", 1, "Contrasena restablecida exitosamente", null);
+    }
+
+    @PostMapping("/{idUsuario}/roles/{idRol}")
+    public GenericResponse<Object> asignarRol(@PathVariable int idUsuario, @PathVariable int idRol) {
+        usuarioService.asignarRol(idUsuario, idRol);
+        return new GenericResponse<>("success", 1, "Rol asignado exitosamente", null);
+    }
+
+    @DeleteMapping("/{idUsuario}/roles/{idRol}")
+    public GenericResponse<Object> quitarRol(@PathVariable int idUsuario, @PathVariable int idRol) {
+        usuarioService.quitarRol(idUsuario, idRol);
+        return new GenericResponse<>("success", 1, "Rol retirado exitosamente", null);
+    }
+
+    @GetMapping("/{idUsuario}/roles")
+    public GenericResponse<List<Rol>> obtenerRolesPorUsuario(@PathVariable int idUsuario) {
+        List<Rol> roles = usuarioService.obtenerRolesPorUsuario(idUsuario);
+        return new GenericResponse<>("success", 1, "Roles obtenidos exitosamente", roles);
     }
 
 

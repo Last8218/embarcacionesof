@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="topbar d-flex align-items-center gap-3" th:fragment="topbar(remoteUser)">
+    <div class="flex-grow-1">
+        <input class="search-box" type="text" placeholder="Buscar embarcaciones, componentes, piezas...">
+    </div>
+    <!--<span class="status-chip">Sistema operativo</span> -->
+    <div class="d-flex align-items-center gap-2">
+        <div class="rounded-circle bg-info-subtle text-info d-inline-flex align-items-center justify-content-center"
+             style="width: 36px; height: 36px; font-weight: 700;">
+            U
+        </div>
+        <div class="small">
+            <div class="fw-semibold" th:text="${remoteUser != null ? remoteUser : 'Usuario'}">Usuario</div>
+            <div class="text-secondary">Administrador tecnico</div>
+        </div>
+    </div>
+    <form th:action="@{/logout}" method="post" class="m-0">
+        <button type="submit" class="btn btn-outline-danger btn-sm">Cerrar sesion</button>
+    </form>
+</div>
+</body>
+</html>
+

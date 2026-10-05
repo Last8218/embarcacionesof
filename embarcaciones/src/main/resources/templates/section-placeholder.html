@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${sectionTitle} + ' - Embarcaciones'">Seccion - Embarcaciones</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f3f8fb;
+      --bg-sidebar: #0e2f3d;
+      --bg-sidebar-soft: #134256;
+      --bg-highlight: #0a3c52;
+      --text-main: #143544;
+      --text-muted: #7f98a4;
+      --card-border: #e7eff3;
+      --card-bg: #ffffff;
+      --success-soft: #e5f7ec;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 280px;
+      background: var(--bg-sidebar);
+      color: #d2e4ec;
+      padding: 20px 16px;
+    }
+
+    .brand-box {
+      background: var(--bg-sidebar-soft);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 22px;
+    }
+
+    .brand-title {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: #8fb4c3;
+      margin: 0;
+    }
+
+    .menu-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #77a0b1;
+      margin: 10px 0 8px;
+    }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #d0e4eb;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      transition: 0.2s ease-in-out;
+      font-size: 0.93rem;
+    }
+
+    .menu-link:hover,
+    .menu-link.active {
+      background: var(--bg-highlight);
+      color: #fff;
+    }
+
+    .menu-next {
+      font-size: 0.75rem;
+      color: #81a7b7;
+    }
+
+    .sidebar-footer {
+      margin-top: 22px;
+      background: var(--bg-sidebar-soft);
+      border-radius: 12px;
+      padding: 12px;
+      color: #b8d2dc;
+      font-size: 0.84rem;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 18px 20px;
+    }
+
+    .topbar {
+      background: #fff;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+    }
+
+    .search-box {
+      border: 1px solid #e4edf2;
+      border-radius: 10px;
+      padding: 8px 12px;
+      width: 100%;
+      background: #f8fbfd;
+      color: #40606e;
+      font-size: 0.92rem;
+    }
+
+    .status-chip {
+      background: var(--success-soft);
+      color: #2f8f58;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .page-head h1 {
+      font-size: 2rem;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .page-head p {
+      color: var(--text-muted);
+      margin: 4px 0 0;
+    }
+
+    .panel {
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      padding: 22px;
+      min-height: 260px;
+    }
+  </style>
+</head>
+<body>
+<div class="d-flex app-shell">
+  <aside th:replace="~{fragments/sidebar :: sidebar(${activeMenu})}"></aside>
+
+  <main class="main-content">
+    <div th:replace="~{fragments/topbar :: topbar(${remoteUser})}"></div>
+
+    <div class="page-head mb-3">
+      <h1 th:text="${sectionTitle}">Seccion</h1>
+      <p>Panel de trabajo</p>
+    </div>
+
+    <section class="panel">
+      <h3>Bienvenido a la seccion seleccionada</h3>
+      <p class="mb-0" th:text="'Actualmente estas en: ' + ${sectionTitle}">Actualmente estas en la seccion.</p>
+    </section>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

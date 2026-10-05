@@ -21,6 +21,39 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UsuarioNoEncontradoException.class)
+    public ResponseEntity<GenericResponse<Object>> manejarUsuarioNoEncontradoException(UsuarioNoEncontradoException ex) {
+        GenericResponse<Object> response = new GenericResponse<>(
+                AppConstants.TIPO_RESTULT,
+                AppConstants.RPTA_WARNING,
+                ex.getMessage(),
+                null
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<GenericResponse<Object>> manejarIllegalArgumentException(IllegalArgumentException ex) {
+        GenericResponse<Object> response = new GenericResponse<>(
+                AppConstants.TIPO_RESTULT,
+                AppConstants.RPTA_WARNING,
+                ex.getMessage(),
+                null
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CorreoEnvioException.class)
+    public ResponseEntity<GenericResponse<Object>> manejarCorreoEnvioException(CorreoEnvioException ex) {
+        GenericResponse<Object> response = new GenericResponse<>(
+                AppConstants.TIPO_RESTULT,
+                AppConstants.RPTA_ERROR,
+                ex.getMessage(),
+                null
+        );
+        return new ResponseEntity<>(response, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GenericResponse<Object>> manejarExcepcionesGenerales(Exception ex) {
         GenericResponse<Object> response = new GenericResponse<>(

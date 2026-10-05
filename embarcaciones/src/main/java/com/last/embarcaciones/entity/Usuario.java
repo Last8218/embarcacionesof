@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -34,11 +36,25 @@ public class Usuario {
     @Column(nullable = false, name = "password_hash")
     private String passwordHash;
 
+    @Column(name = "reset_token_hash", length = 64)
+    private String resetTokenHash;
+
+    @Column(name = "reset_token_expira_at")
+    private LocalDateTime resetTokenExpiraAt;
+
     @Column(nullable = false, name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(nullable = false, name = "estado")
     private int estado;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "usuario_rol",
+            joinColumns = @JoinColumn(name = "id_usuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_rol")
+    )
+    private Set<Rol> roles = new HashSet<>();
 
     public Usuario(int idUsuario, String usuario, String nombre, String apellido, String email, String passwordHash, LocalDateTime createdAt, int estado) {
         this.idUsuario = idUsuario;
@@ -105,6 +121,14 @@ public class Usuario {
         return estado;
     }
 
+    public String getResetTokenHash() {
+        return resetTokenHash;
+    }
+
+    public LocalDateTime getResetTokenExpiraAt() {
+        return resetTokenExpiraAt;
+    }
+
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
@@ -133,7 +157,36 @@ public class Usuario {
         this.createdAt = createdAt;
     }
 
+    public void setResetTokenHash(String resetTokenHash) {
+        this.resetTokenHash = resetTokenHash;
+    }
+
+    public void setResetTokenExpiraAt(LocalDateTime resetTokenExpiraAt) {
+        this.resetTokenExpiraAt = resetTokenExpiraAt;
+    }
+
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public Set<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    public void agregarRol(Rol rol) {
+        roles.add(rol);
+    }
+
+    public void eliminarRol(Rol rol) {
+        roles.remove(rol);
     }
 }
